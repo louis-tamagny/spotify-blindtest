@@ -1,0 +1,2 @@
+- implement error handling and refresh token
+- implement Auth0 with state parameter
