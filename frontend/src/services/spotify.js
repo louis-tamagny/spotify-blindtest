@@ -44,7 +44,7 @@ const getCurrent = async () => {
 const playPlaylist = async (playlistUri) => {
   const response = await axios.post(
     baseUrl,
-    { action: 'getRelatedTracks', payload: playlistUri },
+    { action: 'playPlaylist', payload: playlistUri },
     { headers: { Authorization: authorization } }
   )
   return response.data

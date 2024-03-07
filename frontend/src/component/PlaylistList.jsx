@@ -1,12 +1,13 @@
 /* eslint-disable react/prop-types */
-import spotifyService from "../services/spotify"
-import { useNavigate } from "react-router-dom"
+import spotifyService from '../services/spotify'
+import { useNavigate } from 'react-router-dom'
 
 const Playlist = ({ playlist }) => {
   const navigate = useNavigate()
-  const handlePlayPlaylist = () => {
-    spotifyService.playPlaylist(playlist.uri)
-    navigate("/game")
+  const handlePlayPlaylist = async (event) => {
+    event.preventDefault()
+    await spotifyService.playPlaylist(playlist.uri)
+    navigate('/game')
   }
 
   return (
@@ -15,7 +16,7 @@ const Playlist = ({ playlist }) => {
         className="playlistImg"
         src={playlist.images[0].url}
         alt={playlist.name}
-        onClick={handlePlayPlaylist}
+        onClick={(event) => handlePlayPlaylist(event)}
       />
     </div>
   )

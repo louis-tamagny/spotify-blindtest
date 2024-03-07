@@ -38,7 +38,7 @@ app.post('/login', async (req, res) => {
     })
     .catch((error) => {
       console.log(error.message)
-      res.status(400).end(error)
+      res.status(400).end(JSON.stringify(error))
     })
 })
 
