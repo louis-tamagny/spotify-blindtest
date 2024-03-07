@@ -11,13 +11,20 @@ const Playlist = ({ playlist }) => {
   }
 
   return (
-    <div className="playlistBox">
+    <div className="playlistCard">
       <img
         className="playlistImg"
         src={playlist.images[0].url}
         alt={playlist.name}
-        onClick={(event) => handlePlayPlaylist(event)}
       />
+      <div className="playlistText">
+        <p>{playlist.name}</p>
+        <button
+          className="playlistButton"
+          onClick={(event) => handlePlayPlaylist(event)}>
+          PLAY
+        </button>
+      </div>
     </div>
   )
 }

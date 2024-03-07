@@ -1,0 +1,52 @@
+.playlistCard {
+  max-width: 250px;
+  padding: 0.2em;
+  margin: 0.3em;
+  border: 0.2em solid #011627;
+  box-shadow: 0 0 0.5em rgba(0, 0, 0, 0.5);
+  border-radius: 0.5em;
+  background-color: #246eb9;
+  transition: 0.3s ease-out;
+}
+
+.playlistCard:hover {
+  transform: scale(1.05);
+}
+
+.playlistText {
+  margin-top: 0.1em;
+  margin-bottom: 0.1em;
+  padding: 0.5em;
+  background-color: #bcabae;
+  border: 0.2em solid #011627;
+  border-radius: 0.5em;
+  text-align: center;
+  width: 100%;
+  text-wrap: wrap;
+}
+.playlistList {
+  color: #011627;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  background-color: #75b9be;
+}
+.playlistButton {
+  text-decoration: none;
+  border-radius: 0.5em;
+  border: none;
+  background-color: #bcabae;
+  color: #246eb9;
+  transition: 0.5s;
+}
+
+.playlistButton:hover {
+  color: #011627;
+  transform: scale(1.15);
+}
+.playlistImg {
+  border: 0.2em solid #011627;
+  width: 100%;
+  border-radius: 0.5em;
+}

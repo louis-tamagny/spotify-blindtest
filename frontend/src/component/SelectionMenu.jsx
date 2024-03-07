@@ -1,11 +1,11 @@
-import PlaylistList from "./PlaylistList"
-import { useState } from "react"
-import spotifyService from "../services/spotify"
-import GameView from "./GameView"
-import Container from "react-bootstrap/Container"
-import NavBar from "react-bootstrap/Navbar"
-import Nav from "react-bootstrap/Nav"
-import { NavDropdown, Navbar } from "react-bootstrap"
+import PlaylistList from './PlaylistList'
+import { useState } from 'react'
+import spotifyService from '../services/spotify'
+import GameView from './GameView'
+import Container from 'react-bootstrap/Container'
+import NavBar from 'react-bootstrap/Navbar'
+import Nav from 'react-bootstrap/Nav'
+import { NavDropdown, Navbar } from 'react-bootstrap'
 
 const SelectionMenu = () => {
   const [playlists, setPlaylists] = useState([])
@@ -39,12 +39,12 @@ const SelectionMenu = () => {
               </Nav.Link>
               <NavDropdown title="Categories" id="basic-nav-dropdown">
                 <NavDropdown.Item
-                  onClick={() => getCategoryPlaylists("classical")}
-                >
+                  onClick={() => getCategoryPlaylists('classical')}>
                   Classical
                 </NavDropdown.Item>
               </NavDropdown>
             </Nav>
+            <NavBar.Text>Logout</NavBar.Text>
           </NavBar.Collapse>
         </Container>
       </NavBar>
