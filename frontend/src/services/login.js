@@ -1,4 +1,4 @@
-import config from '../config'
+import config from '../utils/config'
 
 const askForCode = async () => {
   const searchParams = new URLSearchParams({

@@ -1,9 +1,9 @@
 import { useEffect } from 'react'
 import axios from 'axios'
-import config from '../config'
+import config from '../utils/config'
+import { Spinner } from 'react-bootstrap'
 
 const askForToken = async (code) => {
-  console.log(code)
   const loggedInUser = await axios.post('http://localhost:3001/login', {
     code: code,
   })
@@ -23,9 +23,9 @@ const CallbackPopup = () => {
   }, [])
 
   return (
-    <div>
-      <p>Callback popup</p>
-    </div>
+    <Spinner animation="border" role="status">
+      <span className="visually-hidden">Loading...</span>
+    </Spinner>
   )
 }
 

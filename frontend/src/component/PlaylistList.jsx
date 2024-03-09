@@ -3,27 +3,37 @@ import { useEffect, useState } from 'react'
 import spotifyService from '../services/spotify'
 import { useNavigate, useParams } from 'react-router-dom'
 import Spinner from 'react-bootstrap/Spinner'
+import { useDispatch } from 'react-redux'
+import { newError } from '../reducers/errorReducer'
 
 const Playlist = ({ playlist }) => {
   const navigate = useNavigate()
+  const dispatch = useDispatch()
+
   const handlePlayPlaylist = async (event) => {
     event.preventDefault()
-    await spotifyService.playPlaylist(playlist.uri)
-    await spotifyService.pause()
+    try {
+      await spotifyService.playPlaylist(playlist.uri)
+      await spotifyService.pause()
+    } catch (error) {
+      console.log(error)
+      dispatch(newError(error.message))
+    }
+
     navigate('/game')
   }
 
   return (
-    <div className="playlistCard">
+    <div className='playlistCard'>
       <img
-        className="playlistImg"
+        className='playlistImg'
         src={playlist.images[0].url}
         alt={playlist.name}
       />
-      <div className="playlistText">
+      <div className='playlistText'>
         <p>{playlist.name}</p>
         <button
-          className="playlistButton"
+          className='playlistButton'
           onClick={(event) => handlePlayPlaylist(event)}>
           PLAY
         </button>
@@ -54,6 +64,7 @@ const PlaylistList = () => {
   }
 
   useEffect(() => {
+    try {
     switch (playlistParam) {
       case 'user':
         getUserPlaylists()
@@ -64,23 +75,30 @@ const PlaylistList = () => {
       default:
         getCategoryPlaylists(playlistParam)
         break
+    }}catch(error){
+      dispatch(newError(error))
     }
   }, [playlistParam])
 
   if (playlists.length === 0) {
     return (
       <div>
-        <Spinner animation="border" role="status">
-          <span className="visually-hidden">Loading...</span>
+        <Spinner
+          animation='border'
+          role='status'>
+          <span className='visually-hidden'>Loading...</span>
         </Spinner>
       </div>
     )
   }
 
   return (
-    <div className="playlistList">
+    <div className='playlistList'>
       {playlists.map((playlist) => (
-        <Playlist key={playlist.id} playlist={playlist} />
+        <Playlist
+          key={playlist.id}
+          playlist={playlist}
+        />
       ))}
     </div>
   )
