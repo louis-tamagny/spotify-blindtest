@@ -1,6 +1,4 @@
-import PlaylistList from './PlaylistList'
 import { useEffect, useState } from 'react'
-import spotifyService from '../services/spotify'
 import Container from 'react-bootstrap/Container'
 import NavBar from 'react-bootstrap/Navbar'
 import Nav from 'react-bootstrap/Nav'
@@ -8,7 +6,6 @@ import { NavDropdown, Navbar } from 'react-bootstrap'
 import { handleLogin, handleLogout } from '../services/login'
 
 const SelectionMenu = () => {
-  const [playlists, setPlaylists] = useState([])
   const [isLoggedIn, setIsLoggedIn] = useState(false)
 
   useEffect(() => {
@@ -16,21 +13,6 @@ const SelectionMenu = () => {
       setIsLoggedIn(true)
     }
   }, [])
-
-  const getUserPlaylists = async () => {
-    const newPlaylists = await spotifyService.getUserPlaylists()
-    setPlaylists(newPlaylists)
-  }
-
-  const getFeaturedPlaylists = async () => {
-    const newPlaylists = await spotifyService.getFeaturedPlaylists()
-    setPlaylists(newPlaylists)
-  }
-
-  const getCategoryPlaylists = async (category) => {
-    const newPlaylists = await spotifyService.getPlaylistsByCategory(category)
-    setPlaylists(newPlaylists)
-  }
 
   return (
     <>
@@ -42,11 +24,10 @@ const SelectionMenu = () => {
             <Nav>
               {isLoggedIn ? (
                 <>
-                  <Nav.Link onClick={getUserPlaylists}>Collection</Nav.Link>
-                  <Nav.Link onClick={getFeaturedPlaylists}>Featured</Nav.Link>
+                  <Nav.Link href="/playlists/user">Collection</Nav.Link>
+                  <Nav.Link href="/playlists/featured">Featured</Nav.Link>
                   <NavDropdown title="Categories" id="basic-nav-dropdown">
-                    <NavDropdown.Item
-                      onClick={() => getCategoryPlaylists('classical')}>
+                    <NavDropdown.Item href="/playlists/classical">
                       Classical
                     </NavDropdown.Item>
                   </NavDropdown>
@@ -59,7 +40,6 @@ const SelectionMenu = () => {
           </NavBar.Collapse>
         </Container>
       </NavBar>
-      <PlaylistList playlists={playlists} />
     </>
   )
 }

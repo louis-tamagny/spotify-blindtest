@@ -8,6 +8,7 @@ import {
 } from 'react-router-dom'
 import CallbackPopup from './component/CallbackPopup'
 import { Container } from 'react-bootstrap'
+import PlaylistList from './component/PlaylistList'
 
 function App() {
   return (
@@ -15,6 +16,7 @@ function App() {
       <SelectionMenu />
       <Routes>
         <Route path="/callback" element={<CallbackPopup />} />
+        <Route path="/playlists/:playlistParam" element={<PlaylistList />} />
         <Route path="/game" element={<GameView />} />
       </Routes>
     </Container>
