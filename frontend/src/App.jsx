@@ -7,16 +7,17 @@ import {
   Route,
 } from 'react-router-dom'
 import CallbackPopup from './component/CallbackPopup'
+import { Container } from 'react-bootstrap'
 
 function App() {
   return (
-    <div className="container">
+    <Container fluid style={{ padding: '0px' }}>
       <SelectionMenu />
       <Routes>
         <Route path="/callback" element={<CallbackPopup />} />
         <Route path="/game" element={<GameView />} />
       </Routes>
-    </div>
+    </Container>
   )
 }
 

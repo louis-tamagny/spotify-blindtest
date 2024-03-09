@@ -1,7 +1,6 @@
 import PlaylistList from './PlaylistList'
 import { useEffect, useState } from 'react'
 import spotifyService from '../services/spotify'
-import GameView from './GameView'
 import Container from 'react-bootstrap/Container'
 import NavBar from 'react-bootstrap/Navbar'
 import Nav from 'react-bootstrap/Nav'
@@ -16,7 +15,7 @@ const SelectionMenu = () => {
     if (window.localStorage.getItem('loggedInUser')) {
       setIsLoggedIn(true)
     }
-  })
+  }, [])
 
   const getUserPlaylists = async () => {
     const newPlaylists = await spotifyService.getUserPlaylists()
@@ -34,7 +33,7 @@ const SelectionMenu = () => {
   }
 
   return (
-    <Container>
+    <>
       <NavBar expand="md" bg="dark" data-bs-theme="dark">
         <Container>
           <NavBar.Brand>Spotify Blindtest</NavBar.Brand>
@@ -61,7 +60,7 @@ const SelectionMenu = () => {
         </Container>
       </NavBar>
       <PlaylistList playlists={playlists} />
-    </Container>
+    </>
   )
 }
 
