@@ -9,6 +9,7 @@ const Playlist = ({ playlist }) => {
   const handlePlayPlaylist = async (event) => {
     event.preventDefault()
     await spotifyService.playPlaylist(playlist.uri)
+    await spotifyService.pause()
     navigate('/game')
   }
 

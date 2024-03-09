@@ -1,8 +1,8 @@
-import { createSlice } from "@reduxjs/toolkit"
-import spotifyService from "../services/spotify"
+import { createSlice } from '@reduxjs/toolkit'
+import spotifyService from '../services/spotify'
 
 const gameSlice = createSlice({
-  name: "game",
+  name: 'game',
   initialState: {
     score: 0,
     trackCounter: 0,
@@ -78,6 +78,22 @@ export const {
   selectTracks,
 } = gameSlice.selectors
 
+//Function to return 4 random items from an array
+const shuffleArray = (array) => {
+  const newArray = []
+  while (newArray.length < 4 && newArray.length < array.length) {
+    const i = Math.floor(Math.random() * array.length)
+    if (!newArray.includes(i)) {
+      newArray.push(i)
+      console.log(i)
+    }
+  }
+  return newArray.map((i) => {
+    console.log(i, array[i])
+    return array[i]
+  })
+}
+
 export const goToNextTrack = () => {
   return async (dispatch) => {
     dispatch(updateArtists([]))
@@ -92,8 +108,7 @@ export const goToNextTrack = () => {
       )
       dispatch(
         updateArtists(
-          artists
-            .slice(0, 4)
+          shuffleArray(artists)
             .concat(currentTrack.artists[0])
             .toSorted((a, b) =>
               a.name.toLowerCase() > b.name.toLowerCase() ? 1 : -1

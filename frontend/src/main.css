@@ -57,3 +57,12 @@
 body {
   background-color: #6c8ead;
 }
+
+#start-button {
+  background-color: #011627;
+  margin: auto;
+}
+
+#game-screen {
+  padding: 5em;
+}
