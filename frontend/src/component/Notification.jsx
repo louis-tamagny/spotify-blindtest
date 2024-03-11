@@ -1,14 +1,20 @@
 import { useSelector } from 'react-redux'
-import { selectErrors } from '../reducers/errorReducer'
+import { selectNotifications } from '../reducers/notificationReducer'
 import { Alert } from 'react-bootstrap'
 
 const Notification = () => {
-  const errors = useSelector(selectErrors)
+  const notifications = useSelector(selectNotifications)
   return (
     <div>
-      {errors.map((error, index) => 
-        <Alert variant='warning' dismissible style={{textAlign: 'center'}} key={index}>{error}</Alert>
-      )}
+      {notifications.map((notification, index) => (
+        <Alert
+          variant='warning'
+          dismissible
+          style={{ textAlign: 'center', margin: '0px' }}
+          key={index}>
+          {notification}
+        </Alert>
+      ))}
     </div>
   )
 }

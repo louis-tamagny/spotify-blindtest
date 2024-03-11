@@ -4,7 +4,7 @@ import spotifyService from '../services/spotify'
 import { useNavigate, useParams } from 'react-router-dom'
 import Spinner from 'react-bootstrap/Spinner'
 import { useDispatch } from 'react-redux'
-import { newError } from '../reducers/errorReducer'
+import { newNotification } from '../reducers/notificationReducer'
 
 const Playlist = ({ playlist }) => {
   const navigate = useNavigate()
@@ -17,7 +17,7 @@ const Playlist = ({ playlist }) => {
       await spotifyService.pause()
     } catch (error) {
       console.log(error)
-      dispatch(newError(error.message))
+      dispatch(newNotification(error.message))
     }
 
     navigate('/game')
@@ -45,6 +45,7 @@ const Playlist = ({ playlist }) => {
 const PlaylistList = () => {
   const playlistParam = useParams().playlistParam
   const [playlists, setPlaylists] = useState([])
+  const dispatch = useDispatch()
 
   console.log(playlistParam)
 
@@ -65,22 +66,23 @@ const PlaylistList = () => {
 
   useEffect(() => {
     try {
-    switch (playlistParam) {
-      case 'user':
-        getUserPlaylists()
-        break
-      case 'featured':
-        getFeaturedPlaylists()
-        break
-      default:
-        getCategoryPlaylists(playlistParam)
-        break
-    }}catch(error){
-      dispatch(newError(error))
+      switch (playlistParam) {
+        case 'user':
+          getUserPlaylists()
+          break
+        case 'featured':
+          getFeaturedPlaylists()
+          break
+        default:
+          getCategoryPlaylists(playlistParam)
+          break
+      }
+    } catch (error) {
+      dispatch(newNotification(error))
     }
-  }, [playlistParam])
+  }, [playlistParam, dispatch])
 
-  if (playlists.length === 0) {
+  if (!playlists || playlists.length === 0) {
     return (
       <div>
         <Spinner

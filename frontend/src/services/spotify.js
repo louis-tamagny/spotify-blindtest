@@ -1,26 +1,45 @@
 import axios from 'axios'
+import { refreshToken } from './login'
 
 const baseUrl = 'http://localhost:3001/spotify'
 const authorization = localStorage.getItem('loggedInUser')
   ? 'Bearer ' + JSON.parse(localStorage.getItem('loggedInUser')).access_token
   : null
 
+const handleError = async (fn) => {
+  try {
+    return await fn()
+  } catch (error) {
+    if (error.response.data.error.message === 'The access token expired') {
+      await refreshToken(
+        await JSON.parse(localStorage.getItem('loggedInUser')).refresh_token
+      )
+    }
+    console.log('handleError catch:', error)
+    return null
+  }
+}
+
 const getUserPlaylists = async () => {
-  const response = await axios.post(
-    baseUrl,
-    { action: 'getUserPlaylists' },
-    { headers: { Authorization: authorization } }
-  )
-  return response.data
+  return handleError(async () => {
+    const response = await axios.post(
+      baseUrl,
+      { action: 'getUserPlaylists' },
+      { headers: { Authorization: authorization } }
+    )
+    return response.data
+  })
 }
 
 const getFeaturedPlaylists = async () => {
-  const response = await axios.post(
-    baseUrl,
-    { action: 'getFeaturedPlaylists' },
-    { headers: { Authorization: authorization } }
-  )
-  return response.data
+  return handleError(async () => {
+    const response = await axios.post(
+      baseUrl,
+      { action: 'getFeaturedPlaylists' },
+      { headers: { Authorization: authorization } }
+    )
+    return response.data
+  })
 }
 
 const getPlaylistsByCategory = async (category) => {

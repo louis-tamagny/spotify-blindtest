@@ -13,13 +13,24 @@ import Notification from './component/Notification'
 
 function App() {
   return (
-    <Container fluid style={{ padding: '0px' }}>
+    <Container
+      fluid
+      style={{ padding: '0px' }}>
       <SelectionMenu />
       <Notification />
       <Routes>
-        <Route path="/callback" element={<CallbackPopup />} />
-        <Route path="/playlists/:playlistParam" element={<PlaylistList />} />
-        <Route path="/game" element={<GameView />} />
+        <Route
+          path='/callback'
+          element={<CallbackPopup />}
+        />
+        <Route
+          path='/playlists/:playlistParam'
+          element={<PlaylistList />}
+        />
+        <Route
+          path='/game'
+          element={<GameView />}
+        />
       </Routes>
     </Container>
   )

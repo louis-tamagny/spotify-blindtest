@@ -22,15 +22,12 @@ const getToken = async (code) => {
 }
 
 const refreshToken = async (refresh_token) => {
-  const params = new URLSearchParams({
-    grant_type: 'refresh_token',
-    refresh_token,
-    client_id: process.env.SP_CLIENT_ID,
-  })
-
   const response = await axios.post(
-    `https://accounts.spotify.com/api/token?${params}`,
-    null,
+    `https://accounts.spotify.com/api/token`,
+    {
+      grant_type: 'refresh_token',
+      refresh_token: refresh_token,
+    },
     {
       headers: {
         'Content-Type': 'application/x-www-form-urlencoded',
@@ -40,7 +37,7 @@ const refreshToken = async (refresh_token) => {
       },
     }
   )
-  return response.data.access_token
+  return response.data
 }
 
 module.exports = { refreshToken, getToken }

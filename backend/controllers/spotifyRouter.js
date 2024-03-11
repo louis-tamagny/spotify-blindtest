@@ -105,46 +105,50 @@ const getRelatedTracks = async (authorization, track) => {
 }
 
 spotifyRouter.post('', async (req, res, next) => {
-  let result
-  const authorization = req.headers.authorization
-  const payload = req.body.payload
-  switch (req.body.action) {
-    case 'getUserPlaylists':
-      result = await getUserPlaylists(authorization)
-      break
-    case 'getFeaturedPlaylists':
-      result = await getFeaturedPlaylists(authorization)
-      break
-    case 'getPlaylistsByCategory':
-      result = await getPlaylistsByCategory(authorization, payload)
-      break
-    case 'playPlaylist':
-      result = await playPlaylist(authorization, payload)
-      break
-    case 'pause':
-      result = await pause(authorization)
-      break
-    case 'getRelatedArtists':
-      result = await getRelatedArtists(authorization, payload)
-      break
-    case 'getCurrent':
-      result = await getCurrent(authorization)
-      break
-    case 'playNext':
-      result = await playNext(authorization)
-      break
-    case 'getRelatedTracks':
-      result = await getRelatedTracks(authorization, payload)
-      break
-    case 'getQueue':
-      result = await getQueue(authorization)
-      break
+  try {
+    let result
+    const authorization = req.headers.authorization
+    const payload = req.body.payload
+    switch (req.body.action) {
+      case 'getUserPlaylists':
+        result = await getUserPlaylists(authorization)
+        break
+      case 'getFeaturedPlaylists':
+        result = await getFeaturedPlaylists(authorization)
+        break
+      case 'getPlaylistsByCategory':
+        result = await getPlaylistsByCategory(authorization, payload)
+        break
+      case 'playPlaylist':
+        result = await playPlaylist(authorization, payload)
+        break
+      case 'pause':
+        result = await pause(authorization)
+        break
+      case 'getRelatedArtists':
+        result = await getRelatedArtists(authorization, payload)
+        break
+      case 'getCurrent':
+        result = await getCurrent(authorization)
+        break
+      case 'playNext':
+        result = await playNext(authorization)
+        break
+      case 'getRelatedTracks':
+        result = await getRelatedTracks(authorization, payload)
+        break
+      case 'getQueue':
+        result = await getQueue(authorization)
+        break
 
-    default:
-      res.status(404).end('invalid action name')
-      return
+      default:
+        res.status(404).end('invalid action name')
+        return
+    }
+    res.status(200).json(result)
+  } catch (error) {
+    next(error)
   }
-  res.status(200).json(result)
 })
 
 module.exports = spotifyRouter

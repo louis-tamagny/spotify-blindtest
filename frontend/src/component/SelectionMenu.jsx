@@ -16,19 +16,36 @@ const SelectionMenu = () => {
 
   return (
     <>
-      <NavBar expand="md" bg="dark" data-bs-theme="dark">
+      <NavBar
+        expand='md'
+        bg='dark'
+        data-bs-theme='dark'>
         <Container>
           <NavBar.Brand>Spotify Blindtest</NavBar.Brand>
-          <Navbar.Toggle aria-controls="basic-navbar-nav" />
-          <NavBar.Collapse id="basic-navbar-nav">
+          <Navbar.Toggle aria-controls='basic-navbar-nav' />
+          <NavBar.Collapse id='basic-navbar-nav'>
             <Nav>
               {isLoggedIn ? (
                 <>
-                  <Nav.Link href="/playlists/user">Collection</Nav.Link>
-                  <Nav.Link href="/playlists/featured">Featured</Nav.Link>
-                  <NavDropdown title="Categories" id="basic-nav-dropdown">
-                    <NavDropdown.Item href="/playlists/classical">
+                  <Nav.Link href='/playlists/user'>Collection</Nav.Link>
+                  <Nav.Link href='/playlists/featured'>Featured</Nav.Link>
+                  <NavDropdown
+                    title='Categories'
+                    id='basic-nav-dropdown'>
+                    <NavDropdown.Item href='/playlists/classical'>
                       Classical
+                    </NavDropdown.Item>
+                    <NavDropdown.Item href='/playlists/metal'>
+                      Metal
+                    </NavDropdown.Item>
+                    <NavDropdown.Item href='/playlists/movie'>
+                      Movie
+                    </NavDropdown.Item>
+                    <NavDropdown.Item href='/playlists/jazz'>
+                      Jazz
+                    </NavDropdown.Item>
+                    <NavDropdown.Item href='/playlists/punk'>
+                      Punk
                     </NavDropdown.Item>
                   </NavDropdown>
                   <Nav.Link onClick={handleLogout}>Logout</Nav.Link>

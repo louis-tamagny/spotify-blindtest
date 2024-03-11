@@ -1,3 +1,9 @@
+/* display outline to help positioning
+* {
+  outline: 1px solid red;
+}
+*/
+
 .playlistCard {
   max-width: 250px;
   margin: 0.3em;
@@ -10,6 +16,7 @@
 
   background-color: #112637;
   border: 0.3em solid #000000;
+  box-sizing: border-box;
 }
 .playlistImg {
   width: 100%;

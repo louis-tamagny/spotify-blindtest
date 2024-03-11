@@ -85,11 +85,9 @@ const shuffleArray = (array) => {
     const i = Math.floor(Math.random() * array.length)
     if (!newArray.includes(i)) {
       newArray.push(i)
-      console.log(i)
     }
   }
   return newArray.map((i) => {
-    console.log(i, array[i])
     return array[i]
   })
 }

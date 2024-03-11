@@ -1,9 +1,9 @@
 import { configureStore } from '@reduxjs/toolkit'
 import gameReducer from './reducers/gameReducer'
-import errorReducer from './reducers/errorReducer'
+import notificationReducer from './reducers/notificationReducer'
 
 const store = configureStore({
-  reducer: { game: gameReducer, error: errorReducer },
+  reducer: { game: gameReducer, notification: notificationReducer },
 })
 
 store.subscribe(() => console.log(store.getState()))
