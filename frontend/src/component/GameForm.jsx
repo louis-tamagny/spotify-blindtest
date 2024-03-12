@@ -11,7 +11,14 @@ const GameForm = ({ startGame }) => {
 
   const handleSubmit = async (event) => {
     event.preventDefault()
-    const parameters = { artistP, trackP, yearP, infiniteP, nbTurnP, scoreP }
+    const parameters = {
+      artist: artistP,
+      track: trackP,
+      year: yearP,
+      infinite: infiniteP,
+      turns: nbTurnP,
+      score: scoreP,
+    }
     console.log(parameters)
     startGame(parameters)
   }

@@ -8,7 +8,9 @@ const gameSlice = createSlice({
     trackCounter: 0,
     artists: [],
     tracks: [],
+    years: [],
     currentTrack: {},
+    parameters: {},
   },
   reducers: {
     updateArtists(state, { payload }) {
@@ -16,6 +18,9 @@ const gameSlice = createSlice({
     },
     updateTracks(state, { payload }) {
       state.tracks = payload
+    },
+    updateYears(state, { payload }) {
+      state.years = payload
     },
     updateCurrentTrack(state, { payload }) {
       state.currentTrack = payload
@@ -29,6 +34,9 @@ const gameSlice = createSlice({
     incrementScore(state) {
       state.score++
     },
+    updateParameters(state, { payload }) {
+      state.parameters = payload
+    },
     clearScore(state) {
       state.score = 0
     },
@@ -38,6 +46,8 @@ const gameSlice = createSlice({
       state.trackCounter = 0
       state.tracks = []
       state.artists = []
+      state.parameters = {}
+      state.years = []
     },
   },
   selectors: {
@@ -56,6 +66,12 @@ const gameSlice = createSlice({
     selectTrackCounter(state) {
       return state.trackCounter
     },
+    selectParameters(state) {
+      return state.parameters
+    },
+    selectYears(state) {
+      return state.years
+    },
   },
 })
 
@@ -63,9 +79,11 @@ export const {
   updateArtists,
   updateCurrentTrack,
   updateTracks,
+  updateYears,
   incrementCounter,
   clearCounter,
   incrementScore,
+  updateParameters,
   clearScore,
   clear,
 } = gameSlice.actions
@@ -76,61 +94,19 @@ export const {
   selectScore,
   selectTrackCounter,
   selectTracks,
+  selectParameters,
+  selectYears,
 } = gameSlice.selectors
-
-//Function to return 4 random items from an array
-const shuffleArray = (array) => {
-  const newArray = []
-  while (newArray.length < 4 && newArray.length < array.length) {
-    const i = Math.floor(Math.random() * array.length)
-    if (!newArray.includes(i)) {
-      newArray.push(i)
-    }
-  }
-  return newArray.map((i) => {
-    return array[i]
-  })
-}
 
 export const goToNextTrack = () => {
   return async (dispatch) => {
     dispatch(updateArtists([]))
     dispatch(updateTracks([]))
     await spotifyService.playNext()
-
     setTimeout(async () => {
       const currentTrack = await spotifyService.getCurrent()
       dispatch(updateCurrentTrack(currentTrack))
-      const artists = await spotifyService.getRelatedArtists(
-        currentTrack.artists[0].id
-      )
-      dispatch(
-        updateArtists(
-          shuffleArray(artists)
-            .concat(currentTrack.artists[0])
-            .toSorted((a, b) =>
-              a.name.toLowerCase() > b.name.toLowerCase() ? 1 : -1
-            )
-            .map((a) => {
-              return { name: a.name, id: a.id }
-            })
-        )
-      )
-      const tracks = await spotifyService.getRelatedTracks(currentTrack)
-      dispatch(
-        updateTracks(
-          tracks
-            .concat(currentTrack)
-            .toSorted((a, b) =>
-              a.name.toLowerCase() > b.name.toLowerCase() ? 1 : -1
-            )
-            .map((t) => {
-              return { name: t.name, id: t.id }
-            })
-        )
-      )
     }, 500)
-    dispatch(incrementCounter())
   }
 }
 

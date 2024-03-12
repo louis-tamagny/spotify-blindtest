@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react'
 import Container from 'react-bootstrap/Container'
 import NavBar from 'react-bootstrap/Navbar'
 import Nav from 'react-bootstrap/Nav'
-import { NavDropdown, NavLink, Navbar } from 'react-bootstrap'
+import { NavDropdown, Navbar } from 'react-bootstrap'
 import { handleLogin, handleLogout } from '../services/login'
 
 const SelectionMenu = () => {
