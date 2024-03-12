@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import Container from 'react-bootstrap/Container'
-import { Row, Col, Button } from 'react-bootstrap'
+import { Row, Col } from 'react-bootstrap'
 import GameAnswers from './GameAnswers'
 import { useDispatch, useSelector } from 'react-redux'
 import {

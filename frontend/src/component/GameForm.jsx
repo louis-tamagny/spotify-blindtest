@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 import { useState } from 'react'
 
 const GameForm = ({ startGame }) => {
@@ -12,7 +13,7 @@ const GameForm = ({ startGame }) => {
     event.preventDefault()
     const parameters = { artistP, trackP, yearP, infiniteP, nbTurnP, scoreP }
     console.log(parameters)
-    startGame()
+    startGame(parameters)
   }
 
   return (

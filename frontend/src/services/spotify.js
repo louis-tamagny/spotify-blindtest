@@ -15,8 +15,7 @@ const handleError = async (fn) => {
         await JSON.parse(localStorage.getItem('loggedInUser')).refresh_token
       )
     }
-    console.log('handleError catch:', error)
-    return null
+    throw error
   }
 }
 

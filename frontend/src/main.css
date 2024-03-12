@@ -1,3 +1,6 @@
+* {
+  box-sizing: border-box;
+}
 .playlistCard {
   max-width: 250px;
   margin: 0.3em;
@@ -75,6 +78,7 @@ body {
 
 #game-screen {
   padding: 5em;
+  outline: 1px solid black;
 }
 #game-form {
   display: flex;
