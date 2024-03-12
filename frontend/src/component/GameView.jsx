@@ -13,6 +13,7 @@ import {
   selectTracks,
   goToNextTrack,
 } from '../reducers/gameReducer'
+import GameForm from './GameForm'
 
 const GameView = () => {
   const artists = useSelector(selectArtists)
@@ -24,9 +25,8 @@ const GameView = () => {
   const [displayArtists, setDisplayArtists] = useState(true)
   const dispatch = useDispatch()
 
-  const startGame = (event) => {
-    event.preventDefault()
-    document.getElementById('start-button').style.display = 'none'
+  const startGame = () => {
+    document.getElementById('game-form').style.display = 'none'
     nextTrack()
   }
 
@@ -66,23 +66,32 @@ const GameView = () => {
   }
 
   return (
-    <Container id="game-screen">
-      <Row className="justify-content-md-center">
-        <Col md="auto">
-          <Button id="start-button" onClick={(e) => startGame(e)}>
+    <Container id='game-screen'>
+      {/*<Row className='justify-content-md-center'>
+        <Col md='auto'>
+          <Button
+            id='start-button'
+            onClick={(e) => startGame(e)}>
             Start Game
           </Button>
         </Col>
-      </Row>
-      <Row className="justify-content-md-center">
-        <Col md="auto">
+  </Row>*/}
+      <GameForm startGame={startGame} />
+      <Row className='justify-content-md-center'>
+        <Col md='auto'>
           <h2>Answers</h2>
         </Col>
       </Row>
       {artists.length > 0 && displayArtists ? (
-        <GameAnswers list={artists} handleChoice={handleArtistChoice} />
+        <GameAnswers
+          list={artists}
+          handleChoice={handleArtistChoice}
+        />
       ) : (
-        <GameAnswers list={tracks} handleChoice={handleTrackChoice} />
+        <GameAnswers
+          list={tracks}
+          handleChoice={handleTrackChoice}
+        />
       )}
       <Row>
         <Col style={{ textAlign: 'center' }}>
