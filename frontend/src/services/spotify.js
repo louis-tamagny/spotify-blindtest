@@ -43,75 +43,91 @@ const getFeaturedPlaylists = async () => {
 }
 
 const getPlaylistsByCategory = async (category) => {
-  const response = await axios.post(
-    baseUrl,
-    { action: 'getPlaylistsByCategory', payload: category },
-    { headers: { Authorization: authorization } }
-  )
-  return response.data
+  return handleError(async () => {
+    const response = await axios.post(
+      baseUrl,
+      { action: 'getPlaylistsByCategory', payload: category },
+      { headers: { Authorization: authorization } }
+    )
+    return response.data
+  })
 }
 
 const getCurrent = async () => {
-  const response = await axios.post(
-    baseUrl,
-    { action: 'getCurrent' },
-    { headers: { Authorization: authorization } }
-  )
-  return response.data
+  return handleError(async () => {
+    const response = await axios.post(
+      baseUrl,
+      { action: 'getCurrent' },
+      { headers: { Authorization: authorization } }
+    )
+    return response.data
+  })
 }
 
 const playPlaylist = async (playlistUri) => {
-  const response = await axios.post(
-    baseUrl,
-    { action: 'playPlaylist', payload: playlistUri },
-    { headers: { Authorization: authorization } }
-  )
-  return response.data
+  return handleError(async () => {
+    const response = await axios.post(
+      baseUrl,
+      { action: 'playPlaylist', payload: playlistUri },
+      { headers: { Authorization: authorization } }
+    )
+    return response.data
+  })
 }
 
 const getQueue = async () => {
-  const response = await axios.post(
-    baseUrl,
-    { action: 'getQueue' },
-    { headers: { Authorization: authorization } }
-  )
-  return response.data
+  return handleError(async () => {
+    const response = await axios.post(
+      baseUrl,
+      { action: 'getQueue' },
+      { headers: { Authorization: authorization } }
+    )
+    return response.data
+  })
 }
 
 const getRelatedArtists = async (artistId) => {
-  const response = await axios.post(
-    baseUrl,
-    { action: 'getRelatedArtists', payload: artistId },
-    { headers: { Authorization: authorization } }
-  )
-  return response.data
+  return handleError(async () => {
+    const response = await axios.post(
+      baseUrl,
+      { action: 'getRelatedArtists', payload: artistId },
+      { headers: { Authorization: authorization } }
+    )
+    return response.data
+  })
 }
 
 const pause = async () => {
-  const response = await axios.post(
-    baseUrl,
-    { action: 'pause' },
-    { headers: { Authorization: authorization } }
-  )
-  return response.data
+  return handleError(async () => {
+    const response = await axios.post(
+      baseUrl,
+      { action: 'pause' },
+      { headers: { Authorization: authorization } }
+    )
+    return response.data
+  })
 }
 
 const playNext = async () => {
-  const response = await axios.post(
-    baseUrl,
-    { action: 'playNext' },
-    { headers: { Authorization: authorization } }
-  )
-  return response.data
+  return handleError(async () => {
+    const response = await axios.post(
+      baseUrl,
+      { action: 'playNext' },
+      { headers: { Authorization: authorization } }
+    )
+    return response.data
+  })
 }
 
 const getRelatedTracks = async (track) => {
-  const response = await axios.post(
-    baseUrl,
-    { action: 'getRelatedTracks', payload: track },
-    { headers: { Authorization: authorization } }
-  )
-  return response.data
+  return handleError(async () => {
+    const response = await axios.post(
+      baseUrl,
+      { action: 'getRelatedTracks', payload: track },
+      { headers: { Authorization: authorization } }
+    )
+    return response.data
+  })
 }
 
 export default {

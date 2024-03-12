@@ -38,8 +38,8 @@ const SelectionMenu = () => {
                     <NavDropdown.Item href='/playlists/metal'>
                       Metal
                     </NavDropdown.Item>
-                    <NavDropdown.Item href='/playlists/movie'>
-                      Movie
+                    <NavDropdown.Item href='/playlists/decades'>
+                      Décennies
                     </NavDropdown.Item>
                     <NavDropdown.Item href='/playlists/jazz'>
                       Jazz

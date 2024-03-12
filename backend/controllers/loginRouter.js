@@ -17,7 +17,7 @@ loginRouter.post('/accesstoken', async (req, res, next) => {
 loginRouter.post('/refreshtoken', async (req, res, next) => {
   try {
     const result = await refreshToken(req.body.refresh_token)
-    res.status(200).json(result)
+    res.status(200).json({ ...result, refresh_token: req.body.refresh_token })
   } catch (error) {
     next(error)
   }

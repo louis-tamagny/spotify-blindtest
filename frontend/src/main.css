@@ -1,8 +1,6 @@
-/* display outline to help positioning
 * {
   outline: 1px solid red;
 }
-*/
 
 .playlistCard {
   max-width: 250px;
@@ -73,3 +71,5 @@ body {
 #game-screen {
   padding: 5em;
 }
+
+#
