@@ -47,8 +47,6 @@ const PlaylistList = () => {
   const [playlists, setPlaylists] = useState([])
   const dispatch = useDispatch()
 
-  console.log(playlistParam)
-
   const getUserPlaylists = async () => {
     const newPlaylists = await spotifyService.getUserPlaylists()
     setPlaylists(newPlaylists)

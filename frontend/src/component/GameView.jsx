@@ -31,7 +31,7 @@ const GameView = () => {
   const score = useSelector(selectScore)
   const counter = useSelector(selectTrackCounter)
   const parameters = useSelector(selectParameters)
-  const [displayState, setDisplayState] = useState('')
+  const [displayState, setDisplayState] = useState(4)
   const dispatch = useDispatch()
 
   useEffect(() => {
@@ -47,34 +47,34 @@ const GameView = () => {
   }, [currentTrack])
 
   useEffect(() => {
-    if (displayState === 'start') {
+    if (displayState === 0) {
       changeDisplayState()
     }
   }, [displayState])
 
   const changeDisplayState = () => {
     switch (displayState) {
-      case 'start':
+      case 0:
         if (parameters.artist) {
-          setDisplayState('artist')
+          setDisplayState(displayState + 1)
           break
         }
       // falls through
-      case 'artist':
+      case 1:
         if (parameters.track) {
-          setDisplayState('track')
+          setDisplayState(displayState + 1)
           break
         }
       // falls through
-      case 'track':
+      case 2:
         if (parameters.year) {
-          setDisplayState('year')
+          setDisplayState(displayState + 1)
           break
         }
       // falls through
       default:
         nextTrack()
-        setDisplayState('start')
+        setDisplayState(0)
         break
     }
   }
@@ -83,7 +83,7 @@ const GameView = () => {
     nextTrack()
     document.getElementById('game-form').style.display = 'none'
     dispatch(updateParameters(params))
-    setDisplayState('start')
+    setDisplayState(0)
   }
 
   const endGame = () => {
@@ -127,19 +127,19 @@ const GameView = () => {
           <h2>Answers</h2>
         </Col>
       </Row>
-      {displayState === 'artist' && artists.length > 0 && (
+      {displayState > 0 && artists.length > 0 && (
         <GameAnswers
           list={artists}
           handleChoice={handleArtistChoice}
         />
       )}
-      {displayState === 'track' && tracks.length > 0 && (
+      {displayState > 1 && tracks.length > 0 && (
         <GameAnswers
           list={tracks}
           handleChoice={handleTrackChoice}
         />
       )}
-      {displayState === 'year' && years.length > 0 && (
+      {displayState > 2 && years.length > 0 && (
         <GameAnswers
           list={years}
           handleChoice={handleYearChoice}
