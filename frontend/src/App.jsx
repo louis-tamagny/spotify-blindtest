@@ -14,24 +14,33 @@ import Notification from './component/Notification'
 function App() {
   return (
     <Container
+      className='main-container'
       fluid
       style={{ padding: '0px' }}>
-      <SelectionMenu />
-      <Notification />
-      <Routes>
-        <Route
-          path='/callback'
-          element={<CallbackPopup />}
-        />
-        <Route
-          path='/playlists/:playlistParam'
-          element={<PlaylistList />}
-        />
-        <Route
-          path='/game'
-          element={<GameView />}
-        />
-      </Routes>
+      <div>
+        <SelectionMenu />
+        <Notification />
+      </div>
+      <div className='content'>
+        <Routes>
+          <Route
+            path='/callback'
+            element={<CallbackPopup />}
+          />
+          <Route
+            path='/playlists/:playlistParam'
+            element={<PlaylistList />}
+          />
+          <Route
+            path='/game'
+            element={<GameView />}
+          />
+        </Routes>
+      </div>
+      <div className='footer'>
+        <div className='left'>2024 - Created by Louis Tamagny</div>
+        <div className='right'>About</div>
+      </div>
     </Container>
   )
 }

@@ -19,8 +19,8 @@ const SelectionMenu = () => {
       <NavBar
         fixed='sticky top'
         expand='md'
-        bg='dark'
-        data-bs-theme='dark'>
+        data-bs-theme='dark'
+        className='main-navbar'>
         <Container>
           <NavBar.Brand>Spotify Blindtest</NavBar.Brand>
           <Navbar.Toggle aria-controls='basic-navbar-nav' />

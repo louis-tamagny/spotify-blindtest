@@ -77,11 +77,13 @@ const GameView = () => {
 
   return (
     <Container id='game-screen'>
-      <Row className='justify-content-md-left'>
-        <div>
-          <button onClick={endGame}>End Game</button>
-        </div>
-      </Row>
+      {parameters.turns && (
+        <Row className='justify-content-md-left'>
+          <div>
+            <button onClick={endGame}>End Game</button>
+          </div>
+        </Row>
+      )}
       <Row>
         <GameForm startGame={startGame} />
       </Row>

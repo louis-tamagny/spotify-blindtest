@@ -11,7 +11,7 @@ const gameSlice = createSlice({
     years: [],
     currentTrack: {},
     parameters: {},
-    displayState: 0,
+    displayState: 5,
   },
   reducers: {
     updateArtists(state, { payload }) {
@@ -78,7 +78,7 @@ const gameSlice = createSlice({
       state.artists = []
       state.parameters = {}
       state.years = []
-      state.displayState = 0
+      state.displayState = 5
     },
   },
   selectors: {
