@@ -18,6 +18,10 @@ const GameForm = ({ startGame }) => {
       infinite: infiniteP,
       turns: nbTurnP,
       score: scoreP,
+      scoreMax:
+        (artistP ? nbTurnP : 0) +
+        (trackP ? nbTurnP : 0) +
+        (yearP ? nbTurnP : 0),
     }
     console.log(parameters)
     startGame(parameters)

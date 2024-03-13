@@ -11,7 +11,7 @@ const gameSlice = createSlice({
     years: [],
     currentTrack: {},
     parameters: {},
-    displayState: 1,
+    displayState: 0,
   },
   reducers: {
     updateArtists(state, { payload }) {
@@ -42,12 +42,13 @@ const gameSlice = createSlice({
       state.score = 0
     },
     resetDisplayState(state) {
-      state.displayState = 1
+      state.displayState = 0
     },
     nextDisplayState(state) {
       switch (state.displayState) {
         case 0:
           if (state.parameters.artist) {
+            console.log(0)
             state.displayState = 1
             break
           }
@@ -77,7 +78,7 @@ const gameSlice = createSlice({
       state.artists = []
       state.parameters = {}
       state.years = []
-      state.displayState = 1
+      state.displayState = 0
     },
   },
   selectors: {
@@ -140,6 +141,7 @@ export const goToNextTrack = () => {
     dispatch(updateTracks([]))
     dispatch(updateYears([]))
     dispatch(resetDisplayState())
+    dispatch(incrementCounter())
     await spotifyService.playNext()
     setTimeout(async () => {
       const currentTrack = await spotifyService.getCurrent()

@@ -14,8 +14,8 @@ import {
   selectParameters,
   updateParameters,
   selectYears,
-  nextDisplayState,
   selectDisplayState,
+  nextDisplayState,
 } from '../reducers/gameReducer'
 import GameForm from './GameForm'
 import {
@@ -48,8 +48,14 @@ const GameView = () => {
     }
   }, [currentTrack])
 
+  useEffect(() => {
+    if (displayState === 0) {
+      dispatch(nextDisplayState())
+    }
+  }, [displayState])
+
   const startGame = (params) => {
-    nextTrack()
+    dispatch(goToNextTrack())
     document.getElementById('game-form').style.display = 'none'
     dispatch(updateParameters(params))
   }
@@ -60,13 +66,13 @@ const GameView = () => {
     spotifyService.pause()
   }
 
-  const nextTrack = async () => {
-    dispatch(goToNextTrack())
-  }
-
   const handleNextTrack = (event) => {
     event.preventDefault()
-    nextTrack()
+    if (counter === parameters.turns) {
+      endGame()
+    } else {
+      dispatch(goToNextTrack())
+    }
   }
 
   return (
@@ -117,16 +123,24 @@ const GameView = () => {
             <button
               id='game-next-button'
               onClick={handleNextTrack}>
-              NEXT
+              {counter === parameters.turns ? 'END' : 'NEXT'}
             </button>
           </Col>
         </Row>
       )}
-      <Row>
-        <Col style={{ textAlign: 'center' }}>
-          {score} points sur {counter * 2}
-        </Col>
-      </Row>
+
+      {parameters.infinite ? (
+        <Col></Col>
+      ) : (
+        <Row>
+          <Col style={{ textAlign: 'center' }}>
+            {score} points sur {parameters.scoreMax}
+          </Col>
+          <Col style={{ textAlign: 'center' }}>
+            {counter} tour sur {parameters.turns}
+          </Col>
+        </Row>
+      )}
     </Container>
   )
 }
