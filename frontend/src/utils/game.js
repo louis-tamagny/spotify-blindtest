@@ -67,8 +67,8 @@ export const setReleaseDates = (dispatch, currentTrack) => {
   }
   dispatch(
     updateYears(
-      dateArray.map((d, index) => {
-        return { name: d, id: index }
+      dateArray.map((d) => {
+        return { name: d, id: d }
       })
     )
   )

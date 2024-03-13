@@ -102,6 +102,7 @@ export const goToNextTrack = () => {
   return async (dispatch) => {
     dispatch(updateArtists([]))
     dispatch(updateTracks([]))
+    dispatch(updateYears([]))
     await spotifyService.playNext()
     setTimeout(async () => {
       const currentTrack = await spotifyService.getCurrent()

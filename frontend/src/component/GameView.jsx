@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 import Container from 'react-bootstrap/Container'
-import { Row, Col } from 'react-bootstrap'
+import { Row, Col, Button } from 'react-bootstrap'
 import GameAnswers from './GameAnswers'
 import { useDispatch, useSelector } from 'react-redux'
 import {
@@ -22,6 +22,7 @@ import {
   fetchRelatedTracks,
   setReleaseDates,
 } from '../utils/game'
+import spotifyService from '../services/spotify'
 
 const GameView = () => {
   const artists = useSelector(selectArtists)
@@ -56,25 +57,24 @@ const GameView = () => {
     switch (displayState) {
       case 0:
         if (parameters.artist) {
-          setDisplayState(displayState + 1)
+          setDisplayState(1)
           break
         }
       // falls through
       case 1:
         if (parameters.track) {
-          setDisplayState(displayState + 1)
+          setDisplayState(2)
           break
         }
       // falls through
       case 2:
         if (parameters.year) {
-          setDisplayState(displayState + 1)
+          setDisplayState(3)
           break
         }
       // falls through
       default:
-        nextTrack()
-        setDisplayState(0)
+        setDisplayState(4)
         break
     }
   }
@@ -87,63 +87,64 @@ const GameView = () => {
   }
 
   const endGame = () => {
-    document.getElementById('start-button').style.display = ''
+    document.getElementById('game-form').style.display = ''
     dispatch(clear())
+    spotifyService.pause()
+    setDisplayState(0)
   }
 
   const nextTrack = async () => {
     dispatch(goToNextTrack())
   }
 
-  const handleArtistChoice = (event) => {
+  const handleNextTrack = (event) => {
     event.preventDefault()
-    if (event.target.value === currentTrack.artists[0].id) {
-      dispatch(incrementScore())
-    }
-    changeDisplayState()
-  }
-
-  const handleTrackChoice = (event) => {
-    event.preventDefault()
-    if (event.target.value === currentTrack.id) {
-      dispatch(incrementScore())
-    }
-    changeDisplayState()
-  }
-
-  const handleYearChoice = (event) => {
-    event.preventDefault()
-    if (event.target.value === currentTrack.album.release_date) {
-      dispatch(incrementScore())
-    }
-    changeDisplayState()
+    nextTrack()
+    setDisplayState(0)
   }
 
   return (
     <Container id='game-screen'>
-      <GameForm startGame={startGame} />
-      <Row className='justify-content-md-center'>
-        <Col md='auto'>
-          <h2>Answers</h2>
-        </Col>
+      <Row className='justify-content-md-left'>
+        <div>
+          <button onClick={endGame}>End Game</button>
+        </div>
       </Row>
+      <Row>
+        <GameForm startGame={startGame} />
+      </Row>
+
       {displayState > 0 && artists.length > 0 && (
         <GameAnswers
+          listName={'artists'}
           list={artists}
-          handleChoice={handleArtistChoice}
+          changeDisplayState={changeDisplayState}
         />
       )}
       {displayState > 1 && tracks.length > 0 && (
         <GameAnswers
+          listName={'tracks'}
           list={tracks}
-          handleChoice={handleTrackChoice}
+          changeDisplayState={changeDisplayState}
         />
       )}
       {displayState > 2 && years.length > 0 && (
         <GameAnswers
+          listName={'years'}
           list={years}
-          handleChoice={handleYearChoice}
+          changeDisplayState={changeDisplayState}
         />
+      )}
+      {displayState === 4 && (
+        <Row className='justify-content-md-center'>
+          <Col className='col-md-auto'>
+            <button
+              id='game-next-button'
+              onClick={handleNextTrack}>
+              NEXT
+            </button>
+          </Col>
+        </Row>
       )}
       <Row>
         <Col style={{ textAlign: 'center' }}>
@@ -155,28 +156,3 @@ const GameView = () => {
 }
 
 export default GameView
-
-/*  methods to fetch and compute the answers for the game to display
-
-
-setTimeout(async () => {
-      const currentTrack = await spotifyService.getCurrent()
-      dispatch(updateCurrentTrack(currentTrack))
-
-
-      const tracks = await spotifyService.getRelatedTracks(currentTrack)
-      dispatch(
-        updateTracks(
-          tracks
-            .concat(currentTrack)
-            .toSorted((a, b) =>
-              a.name.toLowerCase() > b.name.toLowerCase() ? 1 : -1
-            )
-            .map((t) => {
-              return { name: t.name, id: t.id }
-            })
-        )
-      )
-    }, 500)
-    dispatch(incrementCounter())
-    */

@@ -79,7 +79,11 @@ body {
 #game-screen {
   padding: 5em;
   outline: 1px solid black;
+  display: flex;
+  flex-direction: column;
+  gap: 1em;
 }
+
 #game-form {
   display: flex;
   flex-direction: row;
@@ -122,4 +126,8 @@ body {
 
 #game-input-number {
   width: 3em;
+}
+
+button {
+  margin: auto;
 }
