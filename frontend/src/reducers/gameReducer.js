@@ -11,6 +11,7 @@ const gameSlice = createSlice({
     years: [],
     currentTrack: {},
     parameters: {},
+    displayState: 1,
   },
   reducers: {
     updateArtists(state, { payload }) {
@@ -40,6 +41,34 @@ const gameSlice = createSlice({
     clearScore(state) {
       state.score = 0
     },
+    resetDisplayState(state) {
+      state.displayState = 1
+    },
+    nextDisplayState(state) {
+      switch (state.displayState) {
+        case 0:
+          if (state.parameters.artist) {
+            state.displayState = 1
+            break
+          }
+        // falls through
+        case 1:
+          if (state.parameters.track) {
+            state.displayState = 2
+            break
+          }
+        // falls through
+        case 2:
+          if (state.parameters.year) {
+            state.displayState = 3
+            break
+          }
+        // falls through
+        default:
+          state.displayState = 4
+          break
+      }
+    },
     clear(state) {
       state.score = 0
       state.currentTrack = {}
@@ -48,6 +77,7 @@ const gameSlice = createSlice({
       state.artists = []
       state.parameters = {}
       state.years = []
+      state.displayState = 1
     },
   },
   selectors: {
@@ -72,6 +102,9 @@ const gameSlice = createSlice({
     selectYears(state) {
       return state.years
     },
+    selectDisplayState(state) {
+      return state.displayState
+    },
   },
 })
 
@@ -85,6 +118,8 @@ export const {
   incrementScore,
   updateParameters,
   clearScore,
+  resetDisplayState,
+  nextDisplayState,
   clear,
 } = gameSlice.actions
 
@@ -96,6 +131,7 @@ export const {
   selectTracks,
   selectParameters,
   selectYears,
+  selectDisplayState,
 } = gameSlice.selectors
 
 export const goToNextTrack = () => {
@@ -103,6 +139,7 @@ export const goToNextTrack = () => {
     dispatch(updateArtists([]))
     dispatch(updateTracks([]))
     dispatch(updateYears([]))
+    dispatch(resetDisplayState())
     await spotifyService.playNext()
     setTimeout(async () => {
       const currentTrack = await spotifyService.getCurrent()

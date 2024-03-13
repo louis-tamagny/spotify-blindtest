@@ -1,11 +1,10 @@
-import { useEffect, useState } from 'react'
+import { useEffect } from 'react'
 import Container from 'react-bootstrap/Container'
-import { Row, Col, Button } from 'react-bootstrap'
+import { Row, Col } from 'react-bootstrap'
 import GameAnswers from './GameAnswers'
 import { useDispatch, useSelector } from 'react-redux'
 import {
   clear,
-  incrementScore,
   selectArtists,
   selectCurrentTrack,
   selectScore,
@@ -15,6 +14,8 @@ import {
   selectParameters,
   updateParameters,
   selectYears,
+  nextDisplayState,
+  selectDisplayState,
 } from '../reducers/gameReducer'
 import GameForm from './GameForm'
 import {
@@ -32,7 +33,7 @@ const GameView = () => {
   const score = useSelector(selectScore)
   const counter = useSelector(selectTrackCounter)
   const parameters = useSelector(selectParameters)
-  const [displayState, setDisplayState] = useState(4)
+  const displayState = useSelector(selectDisplayState)
   const dispatch = useDispatch()
 
   useEffect(() => {
@@ -47,50 +48,16 @@ const GameView = () => {
     }
   }, [currentTrack])
 
-  useEffect(() => {
-    if (displayState === 0) {
-      changeDisplayState()
-    }
-  }, [displayState])
-
-  const changeDisplayState = () => {
-    switch (displayState) {
-      case 0:
-        if (parameters.artist) {
-          setDisplayState(1)
-          break
-        }
-      // falls through
-      case 1:
-        if (parameters.track) {
-          setDisplayState(2)
-          break
-        }
-      // falls through
-      case 2:
-        if (parameters.year) {
-          setDisplayState(3)
-          break
-        }
-      // falls through
-      default:
-        setDisplayState(4)
-        break
-    }
-  }
-
   const startGame = (params) => {
     nextTrack()
     document.getElementById('game-form').style.display = 'none'
     dispatch(updateParameters(params))
-    setDisplayState(0)
   }
 
   const endGame = () => {
     document.getElementById('game-form').style.display = ''
     dispatch(clear())
     spotifyService.pause()
-    setDisplayState(0)
   }
 
   const nextTrack = async () => {
@@ -100,7 +67,6 @@ const GameView = () => {
   const handleNextTrack = (event) => {
     event.preventDefault()
     nextTrack()
-    setDisplayState(0)
   }
 
   return (
@@ -116,23 +82,33 @@ const GameView = () => {
 
       {displayState > 0 && artists.length > 0 && (
         <GameAnswers
-          listName={'artists'}
-          list={artists}
-          changeDisplayState={changeDisplayState}
+          list={artists.map((item) => {
+            return { id: item.id, value: item.name }
+          })}
+          goodAnswer={{
+            id: currentTrack.artists[0].id,
+            value: currentTrack.artists[0].name,
+          }}
         />
       )}
       {displayState > 1 && tracks.length > 0 && (
         <GameAnswers
-          listName={'tracks'}
-          list={tracks}
-          changeDisplayState={changeDisplayState}
+          list={tracks.map((item) => {
+            return { id: item.id, value: item.name }
+          })}
+          goodAnswer={{
+            id: currentTrack.id,
+            value: currentTrack.name,
+          }}
         />
       )}
       {displayState > 2 && years.length > 0 && (
         <GameAnswers
-          listName={'years'}
           list={years}
-          changeDisplayState={changeDisplayState}
+          goodAnswer={years.find(
+            (y) =>
+              y.value === Number(currentTrack.album.release_date.slice(0, 4))
+          )}
         />
       )}
       {displayState === 4 && (
