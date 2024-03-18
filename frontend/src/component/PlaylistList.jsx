@@ -17,7 +17,15 @@ const Playlist = ({ playlist }) => {
       await spotifyService.pause()
     } catch (error) {
       console.log(error)
-      dispatch(newNotification(error.message))
+      if (error.response.status === 404) {
+        dispatch(
+          newNotification(
+            'The Spotify application is not running. Please start a listening session'
+          )
+        )
+      } else {
+        dispatch(newNotification(error.message))
+      }
     }
 
     navigate('/game')
@@ -48,35 +56,43 @@ const PlaylistList = () => {
   const dispatch = useDispatch()
 
   const getUserPlaylists = async () => {
-    const newPlaylists = await spotifyService.getUserPlaylists()
-    setPlaylists(newPlaylists)
+    try {
+      const newPlaylists = await spotifyService.getUserPlaylists()
+      setPlaylists(newPlaylists)
+    } catch (error) {
+      dispatch(newNotification(error.message + '. Please try again !'))
+    }
   }
 
   const getFeaturedPlaylists = async () => {
-    const newPlaylists = await spotifyService.getFeaturedPlaylists()
-    setPlaylists(newPlaylists)
+    try {
+      const newPlaylists = await spotifyService.getFeaturedPlaylists()
+      setPlaylists(newPlaylists)
+    } catch (error) {
+      dispatch(newNotification(error.message + '. Please try again !'))
+    }
   }
 
   const getCategoryPlaylists = async (category) => {
-    const newPlaylists = await spotifyService.getPlaylistsByCategory(category)
-    setPlaylists(newPlaylists)
+    try {
+      const newPlaylists = await spotifyService.getPlaylistsByCategory(category)
+      setPlaylists(newPlaylists)
+    } catch (error) {
+      dispatch(newNotification(error.message + '. Please try again !'))
+    }
   }
 
   useEffect(() => {
-    try {
-      switch (playlistParam) {
-        case 'user':
-          getUserPlaylists()
-          break
-        case 'featured':
-          getFeaturedPlaylists()
-          break
-        default:
-          getCategoryPlaylists(playlistParam)
-          break
-      }
-    } catch (error) {
-      dispatch(newNotification(error))
+    switch (playlistParam) {
+      case 'user':
+        getUserPlaylists()
+        break
+      case 'featured':
+        getFeaturedPlaylists()
+        break
+      default:
+        getCategoryPlaylists(playlistParam)
+        break
     }
   }, [playlistParam, dispatch])
 

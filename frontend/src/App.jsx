@@ -5,13 +5,17 @@ import {
   BrowserRouter as Router,
   Routes,
   Route,
+  useNavigate,
 } from 'react-router-dom'
 import CallbackPopup from './component/CallbackPopup'
 import { Container } from 'react-bootstrap'
 import PlaylistList from './component/PlaylistList'
 import Notification from './component/Notification'
+import LandingView from './component/LandingView'
+import AboutView from './component/AboutView'
 
 function App() {
+  const navigate = useNavigate()
   return (
     <Container
       className='main-container'
@@ -23,6 +27,14 @@ function App() {
       </div>
       <div className='content'>
         <Routes>
+          <Route
+            path='/'
+            element={<LandingView />}
+          />
+          <Route
+            path='/about'
+            element={<AboutView />}
+          />
           <Route
             path='/callback'
             element={<CallbackPopup />}
@@ -39,7 +51,11 @@ function App() {
       </div>
       <div className='footer'>
         <div className='left'>2024 - Created by Louis Tamagny</div>
-        <div className='right'>About</div>
+        <div
+          className='right'
+          onClick={() => navigate('/about')}>
+          About
+        </div>
       </div>
     </Container>
   )

@@ -4,9 +4,11 @@ import NavBar from 'react-bootstrap/Navbar'
 import Nav from 'react-bootstrap/Nav'
 import { NavDropdown, Navbar } from 'react-bootstrap'
 import { handleLogin, handleLogout } from '../services/login'
+import { useNavigate } from 'react-router-dom'
 
 const SelectionMenu = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false)
+  const navigate = useNavigate()
 
   useEffect(() => {
     if (window.localStorage.getItem('loggedInUser')) {
@@ -22,7 +24,11 @@ const SelectionMenu = () => {
         data-bs-theme='dark'
         className='main-navbar'>
         <Container>
-          <NavBar.Brand>Spotify Blindtest</NavBar.Brand>
+          <NavBar.Brand
+            className='brand'
+            onClick={() => navigate('/')}>
+            Spotify Blindtest
+          </NavBar.Brand>
           <Navbar.Toggle aria-controls='basic-navbar-nav' />
           <NavBar.Collapse
             id='basic-navbar-nav'

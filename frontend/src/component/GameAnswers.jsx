@@ -17,7 +17,9 @@ const GameAnswers = ({ list, goodAnswer }) => {
   }
 
   return (
-    <Row style={{ padding: '1em', gap: '10px' }}>
+    <Row
+      className='answers'
+      style={{ padding: '1em', gap: '10px' }}>
       {list.map((item) => (
         <Col key={item.id}>
           <Button

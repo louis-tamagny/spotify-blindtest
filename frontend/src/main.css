@@ -1,6 +1,7 @@
 * {
   box-sizing: border-box;
 }
+
 .playlistCard {
   max-width: 250px;
   margin: 0.3em;
@@ -77,12 +78,11 @@ body {
 }
 
 #game-screen {
-  padding: 0em 5em;
+  padding: 0em 0em;
   display: flex;
   flex-direction: column;
   justify-content: space-evenly;
   gap: 1em;
-  outline: auto;
 }
 
 #game-form {
@@ -159,6 +159,7 @@ button:hover {
 
 .footer .right {
   transition: 0.2s ease;
+  cursor: pointer;
 }
 .footer .right:hover {
   color: #246eb9;
@@ -172,4 +173,41 @@ button:hover {
   flex: 1;
   display: flex;
   justify-content: center;
+}
+
+.landing {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  align-items: center;
+  padding: 1em;
+}
+
+.landing h1 {
+  font-size: 48px;
+  font-weight: bolder;
+  color: #246eb9;
+}
+
+.landing p {
+  font-size: large;
+  font-weight: lighter;
+  color: #011627;
+}
+
+.answers {
+  background-color: #112637;
+  border: 2px solid #011627;
+  box-shadow: 0 0 5px #000000;
+}
+
+.scoreRow {
+  color: #011627;
+  font-weight: bold;
+  font-size: larger;
+  text-align: center;
+}
+
+.brand {
+  cursor: pointer;
 }

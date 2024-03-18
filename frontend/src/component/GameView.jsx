@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import { useEffect } from 'react'
 import Container from 'react-bootstrap/Container'
 import { Row, Col } from 'react-bootstrap'
@@ -7,7 +8,6 @@ import {
   clear,
   selectArtists,
   selectCurrentTrack,
-  selectScore,
   selectTrackCounter,
   selectTracks,
   goToNextTrack,
@@ -24,13 +24,13 @@ import {
   setReleaseDates,
 } from '../utils/game'
 import spotifyService from '../services/spotify'
+import GameScore from './GameScore'
 
 const GameView = () => {
   const artists = useSelector(selectArtists)
   const years = useSelector(selectYears)
   const currentTrack = useSelector(selectCurrentTrack)
   const tracks = useSelector(selectTracks)
-  const score = useSelector(selectScore)
   const counter = useSelector(selectTrackCounter)
   const parameters = useSelector(selectParameters)
   const displayState = useSelector(selectDisplayState)
@@ -77,13 +77,6 @@ const GameView = () => {
 
   return (
     <Container id='game-screen'>
-      {parameters.turns && (
-        <Row className='justify-content-md-left'>
-          <div>
-            <button onClick={endGame}>End Game</button>
-          </div>
-        </Row>
-      )}
       <Row>
         <GameForm startGame={startGame} />
       </Row>
@@ -119,30 +112,28 @@ const GameView = () => {
           )}
         />
       )}
-      {displayState === 4 && (
-        <Row className='justify-content-md-center'>
-          <Col className='col-md-auto'>
+
+      <Row className='justify-content-xs-evenly'>
+        {displayState === 4 && (
+          <Col
+            className='col-xs-auto justify-content-xs-center'
+            style={{ textAlign: 'center' }}>
             <button
               id='game-next-button'
               onClick={handleNextTrack}>
-              {counter === parameters.turns ? 'END' : 'NEXT'}
+              {counter === parameters.turns ? 'End' : 'Next'}
             </button>
           </Col>
-        </Row>
-      )}
-
-      {parameters.infinite ? (
-        <Col></Col>
-      ) : (
-        <Row>
-          <Col style={{ textAlign: 'center' }}>
-            {score} points sur {parameters.scoreMax}
+        )}
+        {parameters.turns && (
+          <Col
+            className='col-xs-auto justify-content-xs-center'
+            style={{ textAlign: 'center' }}>
+            <button onClick={endGame}>Exit Game</button>
           </Col>
-          <Col style={{ textAlign: 'center' }}>
-            {counter} tour sur {parameters.turns}
-          </Col>
-        </Row>
-      )}
+        )}
+      </Row>
+      {parameters.turns && parameters.score && <GameScore />}
     </Container>
   )
 }
